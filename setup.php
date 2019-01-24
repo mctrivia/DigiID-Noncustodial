@@ -7,8 +7,7 @@ try {
 	$db = new Database();
 	$db->query("CREATE TABLE `users` (
 		  `hash` binary(32) NOT NULL,
-		  `payout` varchar(255) NOT NULL,
-		  `nounce` binary(16) DEFAULT NULL,
+		  `nonce` binary(16) DEFAULT NULL,
 		  `wallet` binary(20) DEFAULT NULL,
 		  `lastSeen` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;");

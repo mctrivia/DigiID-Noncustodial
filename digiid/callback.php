@@ -33,7 +33,7 @@ if (!$digiid->isMessageSignatureValidSafe(@$variables['address'], @$variables['s
 	throw new \Error("Addresses Don't Match");
 }
 
-//check if nounce is in database
+//check if nonce is in database
 $nonce = $digiid->extractNonce($variables['uri']);
 $secret= $digiid->extractSecret($variables['uri']);
 while (strlen($secret)<40) $secret.=$secret;
@@ -49,7 +49,7 @@ for ($i=0;$i<40;$i++) {
 }
 	
 //update database
-$query='INSERT INTO `users` (`hash`, `payout`, `nounce`, `wallet`) VALUES (unhex(?),"",unhex(?),unhex(?)) ON DUPLICATE KEY UPDATE `nounce`=unhex(?),`wallet`=unhex(?)';
+$query='INSERT INTO `users` (`hash`, `nonce`, `wallet`) VALUES (unhex(?),unhex(?),unhex(?)) ON DUPLICATE KEY UPDATE `nonce`=unhex(?),`wallet`=unhex(?)';
 $stmt=$dao->prepare($query);
 $stmt->bind_param("sssss",$hash,$nonce,$wallet,$nonce,$wallet);
 $stmt->execute();
