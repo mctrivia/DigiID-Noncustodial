@@ -15,15 +15,14 @@ use MCTrivia\Database;
 
 //get log in data if it exists
 $dao = new Database();
-$query='SELECT hex(`wallet`),`payout` FROM `users` WHERE `nounce`=unhex(?) limit 1';
+$query='SELECT hex(`wallet`) FROM `users` WHERE `nonce`=unhex(?) limit 1';
 $stmt=$dao->prepare($query);
 $stmt->bind_param("s",$nonce);
-$stmt->bind_result($wallet,$payout);
+$stmt->bind_result($wallet);
 $stmt->execute();
 if ($stmt->fetch()) {
 	echo json_encode(array(
-		"wallet"=>$wallet,
-		"payout"=>($payout=='')?'ACCOUNT':$payout
+		"wallet"=>$wallet
 	));
 } else {
 	echo json_encode(false);
