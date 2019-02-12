@@ -11,8 +11,13 @@ var main=function(config,document,window,undefined) {
 		loginSecret+=(Math.floor(Math.random()*16)).toString(16);						//create a 20 byte decryption key
 	}
 	var digiQRmessage=config['digiid']+"&secret="+loginSecret;
-	if (digiQRmessage.legnth>127) console.error("Need to shorten uri must be less then 127 bytes currently: " +digiQRmessage.legnth)
-	document.getElementById("login_digiid").src=DigiQR.id(digiQRmessage,300,6,0.5);//(digiid_uri,width,logo style(0-7),radius(0.0-1.0))
+	if (digiQRmessage.legnth>127) console.error("Need to shorten uri must be less then 127 bytes currently: " +digiQRmessage.legnth);
+	var domLoginQR=document.getElementById("login_digiid");
+	domLoginQR.src=DigiQR.id(digiQRmessage,300,6,0.5);//(digiid_uri,width,logo style(0-7),radius(0.0-1.0))
+	domLoginQR.style.cursor='pointer';
+	domLoginQR.addEventListener('click',function() {
+		window.open(digiQRmessage, '_blank');
+	});
 	var digiIDcheck=setInterval(function() {
 		xmr.getJSON('digiid/ajax.php?nonce='+config['nonce']).then(function(reqData){
             if(reqData!=false) {
